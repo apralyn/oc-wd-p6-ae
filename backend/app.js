@@ -133,4 +133,6 @@ app.get("/api/stuff", (req, res, next) => {
     });
 });
 
+//TODO create route for signing up
+
 module.exports = app;
