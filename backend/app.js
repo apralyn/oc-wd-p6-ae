@@ -5,7 +5,8 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 
-const Sauce = require("./models/sauce");
+const saucerRoutes = require("./routes/stuff");
+
 const app = express();
 
 mongoose
@@ -36,8 +37,6 @@ app.use((req, res, next) => {
 });
 
 app.use(bodyParser.json());
-
-
 
 //TODO create route for signing up
 
