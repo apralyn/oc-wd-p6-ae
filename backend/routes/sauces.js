@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const Sauce = require('../models/sauce');
+const Sauce = require("../models/sauce");
 
 router.post("/", (req, res, next) => {
   const sauce = new Sauce({
@@ -26,7 +26,7 @@ router.post("/", (req, res, next) => {
     })
     .catch((error) => {
       res.status(404).json({
-        error: error
+        error: error,
       });
     });
 });
@@ -40,7 +40,7 @@ router.get("/:id", (req, res, next) => {
     })
     .catch((error) => {
       res.status(404).json({
-        error: error
+        error: error,
       });
     });
 });

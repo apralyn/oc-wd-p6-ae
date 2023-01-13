@@ -5,10 +5,12 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 
-const saucerRoutes = require("./routes/sauce");
+const saucerRoutes = require("./routes/sauces");
+const userRoutes = require("./routes/user");
 
 const app = express();
 
+//mongooseAtlas DB server
 mongoose
   .connect(
     "mongodb+srv://ap:7UEIk6Cb7iwvajDH@cluster0.5zxxui0.mongodb.net/?retryWrites=true&w=majority"
@@ -23,6 +25,7 @@ mongoose
 
 app.use(express.json());
 
+//CORS error handling
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
@@ -38,6 +41,7 @@ app.use((req, res, next) => {
 
 app.use(bodyParser.json());
 
-//TODO create route for signing up
+app.use("/api/sauces", stuffRoutes);
+app.use("/api/auth", userRoutes);
 
 module.exports = app;
