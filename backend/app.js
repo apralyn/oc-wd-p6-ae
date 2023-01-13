@@ -5,7 +5,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 
-const saucerRoutes = require("./routes/stuff");
+const saucerRoutes = require("./routes/sauce");
 
 const app = express();
 
