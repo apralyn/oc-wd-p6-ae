@@ -45,20 +45,40 @@ exports.getOneSauce = (req, res, next) => {
 };
 
 exports.modifySauce = (req, res, next) => {
-  const sauce = new Sauce({
-    _id: req.params.id,
-    name: req.body.name,
-    manufacturer: req.body.manufacturer,
-    description: req.body.description,
-    heat: req.body.heat,
-    likes: req.body.likes,
-    dislikes: req.body.dislikes,
-    imageUrl: req.body.imageUrl,
-    mainPepper: req.body.mainPepper,
-    usersLiked: req.body.usersLiked,
-    usersDisliked: req.body.usersDisliked,
-    userId: req.body.userId,
-  });
+  let sauce = new Sauce({ _id: req.params._id });
+  if (reg.file) {
+    const imageUrl = req.protocol + "://" + req.get("host");
+    const parsedSauce = JSON.parse(req.body.sauce);
+    sauce = {
+      userId: parsedSauce.userId,
+      name: parsedSauce.name,
+      manufacturer: parsedSauce.manufacturer,
+      description: parsedSauce.description,
+      mainPepper: parsedSauce.mainPepper,
+      heat: parsedSauce.heat,
+      imageUrl: imageUrl + "/images" + parsedSauce.file.filename,
+      likes: 0,
+      dislikes: 0,
+      usersLiked: [],
+      usersDisliked: [],
+    };
+  } else {
+    sauce = {
+      _id: req.params.id,
+      name: req.body.name,
+      manufacturer: req.body.manufacturer,
+      description: req.body.description,
+      heat: req.body.heat,
+      likes: req.body.likes,
+      dislikes: req.body.dislikes,
+      imageUrl: req.body.imageUrl,
+      mainPepper: req.body.mainPepper,
+      usersLiked: req.body.usersLiked,
+      usersDisliked: req.body.usersDisliked,
+      userId: req.body.userId,
+    };
+  }
+  
   Sauce.updateOne({ _id: req.params.id }, sauce)
     .then(() => {
       res.status(201).json({
