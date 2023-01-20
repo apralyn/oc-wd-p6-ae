@@ -1,8 +1,8 @@
 const Sauce = require("../models/sauce");
 
 exports.createSauce = (req, res, next) => {
-  const imageUrl = "TODO"
-  const parsedSauce = JSON.parse(req.body.sauce)
+  const imageUrl = req.protocol + "://" + req.get("host");
+  const parsedSauce = JSON.parse(req.body.sauce);
   const sauce = new Sauce({
     userId: parsedSauce.userId,
     name: parsedSauce.name,
@@ -10,12 +10,12 @@ exports.createSauce = (req, res, next) => {
     description: parsedSauce.description,
     mainPepper: parsedSauce.mainPepper,
     heat: parsedSauce.heat,
-    imageUrl,
+    imageUrl: imageUrl + "/images" + parsedSauce.file.filename,
     likes: 0,
     dislikes: 0,
     usersLiked: [],
     usersDisliked: [],
-  })
+  });
   sauce
     .save()
     .then(() => {
