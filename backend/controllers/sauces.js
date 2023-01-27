@@ -118,10 +118,8 @@ exports.likeSauce = (req, res, next) => {
   //TODO check if sauce exist (refer to getOneSauce)
   // if found sauce check req.body.
   Sauce.findOne({ _id: req.params.id })
-    .then((sauce) => {
-      
-    })
+    .then((sauce) => {})
     .catch((error) => {
-      res.status(400).json({ error });
+      res.status(400).json({ error: error });
     });
 };
