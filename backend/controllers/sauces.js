@@ -21,7 +21,7 @@ exports.createSauce = (req, res, next) => {
     .save()
     .then(() => {
       res.status(201).json({
-        message: "Post saved successfully!",
+        message: "Sauce saved successfully!",
       });
     })
     .catch((error) => {
@@ -91,7 +91,7 @@ exports.deleteSauce = (req, res, next) => {
       Sauce.deleteOne({ _id: req.params.id })
         .then(() => {
           res.status(200).json({
-            message: "Deleted!",
+            message: "Sauce successfully deleted.",
           });
         })
         .catch((error) => {
@@ -114,6 +114,7 @@ exports.getAllSauces = (req, res, next) => {
       });
     });
 };
+
 exports.likeSauce = (req, res, next) => {
   const userId = req.params.id;
   Sauce.findOne({ _id: userId })
@@ -133,13 +134,12 @@ exports.likeSauce = (req, res, next) => {
         }
       }
       if (req.body.like == 0) {
-        const user = req.body.userId;
-        console.log(user);
         console.log("neither!");
-        //TODO zero will check where the userId is at in an array and decrease the amount of either like or dislike.
-        // use array.filter to
+
         if (sauce.usersLiked.includes(userId)) {
-          sauce.usersLiked = sauce.usersLiked.filter((value) => value !== userId);
+          sauce.usersLiked = sauce.usersLiked.filter(
+            (value) => value !== userId
+          );
           sauce.likes--;
         }
         if (sauce.usersDisliked.includes(userId)) {
@@ -151,7 +151,7 @@ exports.likeSauce = (req, res, next) => {
       }
       sauce.save().then(() =>
         res.status(200).json({
-          message: "Hot Sauce!",
+          message: "Updated the sauce status.",
         })
       );
     })
