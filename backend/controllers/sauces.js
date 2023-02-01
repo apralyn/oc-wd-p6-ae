@@ -115,34 +115,57 @@ exports.getAllSauces = (req, res, next) => {
     });
 };
 exports.likeSauce = (req, res, next) => {
-  //TODO check if sauce exist (refer to getOneSauce)
-  // if found sauce check req.body.
-  Sauce.findOne({ _id: req.params.id }) //one particulare sauce.
+  const userId = req.params.id;
+  Sauce.findOne({ _id: userId }) //one particulare sauce.
 
     // ex valentina sauce; console.log(likes                                                         );
     .then((sauce) => {
       if (req.body.like == 1) {
         console.log("I like this sauce");
+        //add userId to the array
+        //sauce.like++;
+        //sauce.usersLiked.push(req.body.userId);
+
         //TODO check the array first if userId exist in the usersLiked[];
         //condition if userId is in the usersLike array.
-          //don't change the like number. 
-        //if userId does not exist, add to the array and increase the like number. 
-        // add the userId to the usersLiked[] using push.
+        //don't change the like number.
+        //if userId does not exist, add to the array and increase the like number.
+        if (!sauce.usersLiked.includes(userId)) {
+          sauce.usersLiked.push(userId);
+          sauce.likes++;
+        }
       }
-      if (req.body.like == 0){
-        //TODO zero will check where the userId is at in an array and decrease the amount of either like or dislike.
-      }
-      if(req.body.like == -1){
+      if (req.body.like == -1) {
         console.log("I don't like this sauce");
-        //TODO check the array first if userId exist in the usersDisliked[];
-        //condition if userId is in the usersLike array.
-          //don't change the like number. 
-        //if userId does not exist, add to the array and increase the dislike number. 
-        // add the userId to the usersLiked[] using push.
+        //add to dislike
+        //sauce.usersDisliked.push(req.body.userId);
+        if (!sauce.usersDisliked.includes(userId)) {
+          sauce.usersDisliked.push(userId);
+          sauce.dislikes++;
+        }
       }
-      res.status(200).json({
-        message: "I like this Sauce!",
-      });
+      if (req.body.like == 0) {
+        const user = req.body.userId;
+        console.log(user);
+        console.log("neither!");
+        //TODO zero will check where the userId is at in an array and decrease the amount of either like or dislike.
+        // use array.filter to
+        if (sauce.usersLiked.includes(userId)) {
+          sauce.usersLiked = sauce.usersLiked.filter((value) => value !== userId);
+          sauce.likes--;
+        }
+        if (sauce.usersDisliked.includes(userId)) {
+          sauce.usersDisliked = sauce.usersDisliked.filter(
+            (value) => value !== userId
+          );
+          sauce.dislikes--;
+        }
+      }
+      sauce.save().then(() =>
+        res.status(200).json({
+          message: "Hot Sauce!",
+        })
+      );
     })
     .catch((error) => {
       res.status(400).json({
