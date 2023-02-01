@@ -116,20 +116,10 @@ exports.getAllSauces = (req, res, next) => {
 };
 exports.likeSauce = (req, res, next) => {
   const userId = req.params.id;
-  Sauce.findOne({ _id: userId }) //one particulare sauce.
-
-    // ex valentina sauce; console.log(likes                                                         );
+  Sauce.findOne({ _id: userId })
     .then((sauce) => {
       if (req.body.like == 1) {
         console.log("I like this sauce");
-        //add userId to the array
-        //sauce.like++;
-        //sauce.usersLiked.push(req.body.userId);
-
-        //TODO check the array first if userId exist in the usersLiked[];
-        //condition if userId is in the usersLike array.
-        //don't change the like number.
-        //if userId does not exist, add to the array and increase the like number.
         if (!sauce.usersLiked.includes(userId)) {
           sauce.usersLiked.push(userId);
           sauce.likes++;
@@ -137,8 +127,6 @@ exports.likeSauce = (req, res, next) => {
       }
       if (req.body.like == -1) {
         console.log("I don't like this sauce");
-        //add to dislike
-        //sauce.usersDisliked.push(req.body.userId);
         if (!sauce.usersDisliked.includes(userId)) {
           sauce.usersDisliked.push(userId);
           sauce.dislikes++;

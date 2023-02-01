@@ -13,9 +13,7 @@ const app = express();
 
 //mongooseAtlas DB server
 mongoose
-  .connect(
-    "mongodb+srv://ap:7UEIk6Cb7iwvajDH@cluster0.5zxxui0.mongodb.net/?retryWrites=true&w=majority"
-  )
+  .connect(process.env.DB_URL)
   .then(() => {
     console.log("Successfully connected to mongoDB Atlas!");
   })
