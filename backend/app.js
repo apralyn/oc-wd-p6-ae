@@ -1,6 +1,3 @@
-//pw 7UEIk6Cb7iwvajDH
-//mongodb+srv://ap:<password>@cluster0.5zxxui0.mongodb.net/?retryWrites=true&w=majority
-
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
